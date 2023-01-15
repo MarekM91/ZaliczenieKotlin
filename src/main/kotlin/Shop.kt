@@ -4,22 +4,25 @@
 class Shop(val name: String,
            val productList: MutableList<Product>,
            val clientList: MutableList<Client>,
-           var totalIncome: Int) {
+           var totalIncome: Int = 0) {
 
-    fun buyProduct(product: Product){
+    constructor(name: String): this(name, mutableListOf(), mutableListOf())
+
+    fun buyProduct(product: Product, client: Client){
         totalIncome += product.price
         --product.quantity
+        client.boughtProducts.add(product)
     }
 
     fun addProduct(product: Product) {
-        productList.toMutableList().add(product)
+        productList.add(product)
     }
 
     fun removeProduct(product: Product){
-        productList.toMutableList().remove(product)
+        productList.remove(product)
     }
 
-    fun register(){}
-
-    fun login(){}
+    fun register(client: Client){
+        clientList.add(client)
+    }
 }
